@@ -37,7 +37,7 @@ so a successful build also implies a clean check.
 
 ```text
 /
-├── astro.config.mjs        Astro + Starlight config (site, base, sidebar)
+├── astro.config.mjs        Astro + Starlight config (site, sidebar)
 ├── src/
 │   ├── content.config.ts   Starlight docs collection definition
 │   ├── content/docs/docs/  Starlight documentation pages, routed at /docs/
@@ -52,10 +52,13 @@ between the marketing page and the documentation section.
 
 ## Hosting
 
-The production build deploys to GitHub Pages as a project site
-(`https://tritolem.github.io/website/`), per the hosting decision in
-`tritolem/workspace` ADR-0002. `site` and `base` in `astro.config.mjs` are set
-accordingly; update both together if the hosting target changes.
+The production build deploys to GitHub Pages under the custom domain
+`https://tritolem.io/`, served from the repository root, per the hosting
+decision in `tritolem/workspace` ADR-0002. `site` in `astro.config.mjs` is set
+accordingly and `public/CNAME` pins the custom domain so GitHub Pages does not
+forget it on the next deploy. Update both together if the hosting target
+changes; if the site ever moves to a path-based project domain again, a `base`
+option would need to be reintroduced.
 
 ## Continuous integration
 
