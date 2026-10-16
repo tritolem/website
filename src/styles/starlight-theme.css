@@ -1,0 +1,48 @@
+/*
+ * Tritolem dark-purple theme for Starlight.
+ * Overrides the default Starlight color tokens (see
+ * @astrojs/starlight/style/props.css) so /docs/ matches the brand used on
+ * the custom landing page. The site is brand-locked to the dark palette:
+ * the light-mode override below intentionally mirrors the dark values.
+ */
+
+:root {
+	--sl-color-white: #f6f3fc;
+	--sl-color-gray-1: #efedf3;
+	--sl-color-gray-2: #cac6d2;
+	--sl-color-gray-3: #9791a1;
+	--sl-color-gray-4: #635c70;
+	--sl-color-gray-5: #362f41;
+	--sl-color-gray-6: #1f1a28;
+	--sl-color-black: #0e0a15;
+
+	--sl-color-accent-low: #34174f;
+	--sl-color-accent: #a855f7;
+	--sl-color-accent-high: #debefd;
+}
+
+/* Brand-locked: keep the same dark-purple palette when the light theme is selected. */
+:root[data-theme='light'] {
+	--sl-color-white: #f6f3fc;
+	--sl-color-gray-1: #efedf3;
+	--sl-color-gray-2: #cac6d2;
+	--sl-color-gray-3: #9791a1;
+	--sl-color-gray-4: #635c70;
+	--sl-color-gray-5: #362f41;
+	--sl-color-gray-6: #1f1a28;
+	--sl-color-gray-7: #141019;
+	--sl-color-black: #0e0a15;
+
+	--sl-color-accent-low: #34174f;
+	--sl-color-accent: #a855f7;
+	--sl-color-accent-high: #debefd;
+
+	--sl-color-text-accent: var(--sl-color-accent-high);
+	--sl-color-text-invert: var(--sl-color-accent-low);
+	--sl-color-bg-nav: var(--sl-color-gray-6);
+	--sl-color-bg-sidebar: var(--sl-color-gray-6);
+	--sl-color-bg-inline-code: var(--sl-color-gray-5);
+	--sl-color-bg-accent: var(--sl-color-accent-high);
+	--sl-color-hairline-light: var(--sl-color-gray-5);
+	--sl-color-hairline-shade: var(--sl-color-black);
+}

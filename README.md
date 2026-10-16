@@ -7,8 +7,9 @@ documentation at `/docs/`. There is no server or CMS.
 
 ## Status
 
-Early scaffold. The landing page and documentation section are placeholders
-stating the current development status; no feature is released yet.
+Early. The landing page uses the Tritolem dark-purple brand (approved logo,
+color tokens, responsive layout). Its copy and the documentation section both
+state the current development status explicitly; no feature is released yet.
 
 ## Requirements
 
@@ -37,18 +38,41 @@ so a successful build also implies a clean check.
 
 ```text
 /
-├── astro.config.mjs        Astro + Starlight config (site, sidebar)
+├── astro.config.mjs        Astro + Starlight config (site, logo, favicon, theme, sidebar)
 ├── src/
+│   ├── assets/brand/       Logo source files and MANIFEST.md (provenance/approval)
+│   ├── components/         SiteHeader.astro, SiteFooter.astro (shared across marketing pages)
 │   ├── content.config.ts   Starlight docs collection definition
 │   ├── content/docs/docs/  Starlight documentation pages, routed at /docs/
-│   └── pages/index.astro   Custom marketing landing page at /
-└── public/                 Static assets
+│   ├── layouts/            MarketingLayout.astro (head boilerplate, header/footer, skip link)
+│   ├── lib/paths.ts        Shared base-path-aware URL helpers
+│   ├── pages/index.astro   Custom marketing landing page at /
+│   └── styles/             brand.css (landing page tokens), starlight-theme.css (docs theme)
+└── public/                 Static assets (favicons, CNAME)
 ```
 
 Starlight content is nested under `src/content/docs/docs/` so that its pages
 are routed at `/docs/...` instead of the site root, which stays owned by the
 custom `src/pages/index.astro` landing page. This avoids any route conflict
 between the marketing page and the documentation section.
+
+## Design system
+
+The dark-purple brand is defined once and shared by both the custom landing
+page and Starlight:
+
+- `src/styles/brand.css` — CSS custom properties (`--c-*`) and base styles for
+  the marketing page.
+- `src/styles/starlight-theme.css` — overrides Starlight's `--sl-color-*`
+  tokens with the same palette, loaded via `customCss` in `astro.config.mjs`.
+  The site is brand-locked: the light-mode override intentionally mirrors the
+  dark palette so the theme toggle does not break the identity.
+- `src/assets/brand/` — the approved logo (icon-only `tritolem-mark.png` and
+  the full `tritolem-logo-full.png` lockup) plus `MANIFEST.md` documenting
+  source and approval.
+
+All text/background color pairs were checked against WCAG AA contrast
+(4.5:1 for body text, 3:1 for large text/UI).
 
 ## Hosting
 

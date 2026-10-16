@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import mark from '../assets/brand/tritolem-mark.png';
+import { homeUrl, docsUrl } from '../lib/paths';
+---
+
+<header class="site-header">
+	<div class="wrap site-header-inner">
+		<a class="brand" href={homeUrl}>
+			<Image src={mark} alt="" width={36} height={36} />
+			<span>Tritolem</span>
+		</a>
+
+		<button
+			class="nav-toggle"
+			id="nav-toggle"
+			type="button"
+			aria-expanded="false"
+			aria-controls="site-nav"
+		>
+			<span class="sr-only">Toggle navigation</span>
+			<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+				<path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+			</svg>
+		</button>
+
+		<nav id="site-nav" class="site-nav">
+			<a href={docsUrl}>Docs</a>
+			<a href="https://github.com/tritolem" target="_blank" rel="noopener noreferrer">GitHub</a>
+		</nav>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		border-bottom: 1px solid var(--c-card-border);
+		background: color-mix(in srgb, var(--c-bg) 85%, transparent);
+		backdrop-filter: blur(8px);
+		position: sticky;
+		top: 0;
+		z-index: 20;
+	}
+
+	.site-header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-block: 0.9rem;
+		gap: 1rem;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: var(--c-text);
+		font-weight: 700;
+		font-size: 1.1rem;
+		text-decoration: none;
+	}
+
+	.brand:hover {
+		color: var(--c-text);
+	}
+
+	.nav-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: 1px solid var(--c-card-border);
+		border-radius: var(--radius-md);
+		color: var(--c-text);
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+	}
+
+	.site-nav {
+		display: none;
+		flex-direction: column;
+		gap: 0.25rem;
+		position: absolute;
+		inset-inline: 0;
+		top: 100%;
+		background: var(--c-card-bg);
+		border-bottom: 1px solid var(--c-card-border);
+		padding: 1rem 1.25rem;
+	}
+
+	.site-nav.open {
+		display: flex;
+	}
+
+	.site-nav a {
+		color: var(--c-text);
+		text-decoration: none;
+		padding: 0.6rem 0.25rem;
+		font-weight: 600;
+	}
+
+	.site-nav a:hover {
+		color: var(--c-accent);
+	}
+
+	@media (min-width: 48em) {
+		.nav-toggle {
+			display: none;
+		}
+
+		.site-nav {
+			display: flex;
+			flex-direction: row;
+			position: static;
+			background: transparent;
+			border: none;
+			padding: 0;
+			gap: 1.5rem;
+		}
+	}
+</style>
+
+<script>
+	const toggle = document.getElementById('nav-toggle');
+	const nav = document.getElementById('site-nav');
+
+	toggle?.addEventListener('click', () => {
+		const expanded = toggle.getAttribute('aria-expanded') === 'true';
+		toggle.setAttribute('aria-expanded', String(!expanded));
+		nav?.classList.toggle('open', !expanded);
+	});
+</script>
