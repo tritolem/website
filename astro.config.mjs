@@ -5,9 +5,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-  // GitHub Pages project site: https://tritolem.github.io/website/
-  site: 'https://tritolem.github.io',
-  base: '/website',
+  // GitHub Pages custom domain, served from the repository root.
+  site: 'https://tritolem.io',
   integrations: [
     starlight({
       title: 'Tritolem Docs',
