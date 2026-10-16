@@ -1,27 +1,169 @@
 ---
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const docsUrl = `${base}/docs/`;
-const faviconUrl = `${base}/favicon.svg`;
+import { Image } from 'astro:assets';
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import mark from '../assets/brand/tritolem-mark.png';
+import { docsUrl } from '../lib/paths';
+
+const concepts = [
+	{
+		title: 'Customers & projects',
+		body: 'Providers manage customers and projects, and control which teams may order services within which projects.',
+	},
+	{
+		title: 'Service extensions & offerings',
+		body: 'A service extension defines what a service can technically do. Providers turn that into concrete, customer-facing offerings: approved releases, sizes, and options.',
+	},
+	{
+		title: 'Service instances',
+		body: 'Each ordered instance is isolated in its own namespace, with its own placement, endpoint, status, and lifecycle.',
+	},
+	{
+		title: 'Clusters & agents',
+		body: 'A pull-based agent runs on every connected workload cluster, reconciling the desired state locally and keeping already-running services available even if the control plane is unreachable.',
+	},
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={faviconUrl} />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Tritolem</title>
-		<meta name="description" content="Tritolem is in early, greenfield development." />
-	</head>
-	<body>
-		<main>
-			<h1>Tritolem</h1>
-			<p>
-				Tritolem is in early, greenfield development. This site is a
-				placeholder for the product marketing page. No feature is released
-				yet.
-			</p>
-			<p><a href={docsUrl}>Read the documentation placeholder &rarr;</a></p>
-		</main>
-	</body>
-</html>
+<MarketingLayout
+	title="Tritolem"
+	description="Tritolem is a Kubernetes-native platform for providers to run standardized managed services across many clusters."
+>
+	<section class="hero wrap">
+		<Image src={mark} alt="" width={120} height={120} class="hero-mark" />
+		<span class="badge">Early, greenfield development</span>
+		<h1>Tritolem</h1>
+		<p class="lede">
+			A Kubernetes-native, modular platform for providers to run standardized managed
+			services across many existing Kubernetes clusters. Customers order and manage services
+			through one API and CLI, without handling Helm, clusters, or operations themselves.
+		</p>
+		<div class="cta-row">
+			<a class="button button-primary" href={docsUrl}>Read the documentation</a>
+			<a
+				class="button button-secondary"
+				href="https://github.com/tritolem"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				View on GitHub
+			</a>
+		</div>
+	</section>
+
+	<section class="wrap section">
+		<h2>How it works</h2>
+		<p>
+			A provider defines a service offering once and rolls it out as many governed instances
+			for different customers and projects. A central control plane coordinates policy,
+			placement, and lifecycle; it keeps its state as Kubernetes custom resources and exposes a
+			REST API and CLI. A pull-based agent on each workload cluster carries out the local
+			desired state on its own schedule, so already-running services keep working even when
+			the agent cannot reach the control plane.
+		</p>
+	</section>
+
+	<section class="wrap section">
+		<div class="section-heading">
+			<h2>Core concepts</h2>
+			<span class="badge">Design — not yet implemented</span>
+		</div>
+		<div class="concept-grid">
+			{
+				concepts.map((concept) => (
+					<div class="card">
+						<h3>{concept.title}</h3>
+						<p>{concept.body}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="wrap section status-section">
+		<h2>Status</h2>
+		<p>
+			Tritolem is in early, greenfield development. Nothing described on this site is released
+			or generally available yet; the architecture and product scope are still being defined
+			and refined. The <a href={docsUrl}>documentation</a> tracks what is planned versus
+			implemented as the project progresses.
+		</p>
+	</section>
+</MarketingLayout>
+
+<style>
+	.hero {
+		text-align: center;
+		padding-block: 3.5rem 2.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.hero-mark {
+		width: 96px;
+		height: 96px;
+		filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.45));
+	}
+
+	.hero h1 {
+		font-size: clamp(2.25rem, 6vw, 3.5rem);
+		margin: 0;
+	}
+
+	.lede {
+		max-width: 46rem;
+		font-size: 1.125rem;
+		color: var(--c-text-body);
+	}
+
+	.cta-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.9rem;
+		margin-top: 0.5rem;
+	}
+
+	.section {
+		padding-block: 2rem;
+	}
+
+	.section-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.section-heading h2 {
+		margin: 0;
+	}
+
+	.concept-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.concept-grid h3 {
+		margin-top: 0;
+		font-size: 1.1rem;
+	}
+
+	.concept-grid p {
+		margin-bottom: 0;
+		color: var(--c-text-body);
+	}
+
+	.status-section {
+		border-top: 1px solid var(--c-card-border);
+	}
+
+	@media (min-width: 48em) {
+		.concept-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
