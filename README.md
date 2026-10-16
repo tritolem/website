@@ -24,12 +24,13 @@ npm install
 
 ## Commands
 
-| Command         | Action                                                    |
-| ---------------- | ---------------------------------------------------------- |
-| `npm run dev`    | Start the local dev server at `localhost:4321`.             |
-| `npm run build`  | Type-check, then build the production site to `./dist/`.    |
-| `npm run check`  | Run Astro's type and content checks without building.       |
-| `npm run preview`| Preview the production build locally.                       |
+| Command              | Action                                                           |
+| --------------------- | ------------------------------------------------------------------ |
+| `npm run dev`         | Start the local dev server at `localhost:4321`.                    |
+| `npm run build`       | Type-check, then build the production site to `./dist/`.          |
+| `npm run check`       | Run Astro's type and content checks without building.             |
+| `npm run check:links` | Crawl `./dist` and fail on broken internal links. Run after `build`. |
+| `npm run preview`     | Preview the production build locally.                             |
 
 `npm run build` runs `astro check` before `astro build` (see `package.json`),
 so a successful build also implies a clean check.
@@ -43,7 +44,8 @@ so a successful build also implies a clean check.
 │   ├── assets/brand/       Logo source files and MANIFEST.md (provenance/approval)
 │   ├── components/         SiteHeader.astro, SiteFooter.astro (shared across marketing pages)
 │   ├── content.config.ts   Starlight docs collection definition
-│   ├── content/docs/docs/  Starlight documentation pages, routed at /docs/
+│   ├── content/docs/docs/  Documentation pages: concepts/, architecture/,
+│   │                       guides/, reference/, project/ — routed at /docs/
 │   ├── layouts/            MarketingLayout.astro (head boilerplate, header/footer, skip link)
 │   ├── lib/paths.ts        Shared base-path-aware URL helpers
 │   ├── pages/index.astro   Custom marketing landing page at /
@@ -55,6 +57,17 @@ Starlight content is nested under `src/content/docs/docs/` so that its pages
 are routed at `/docs/...` instead of the site root, which stays owned by the
 custom `src/pages/index.astro` landing page. This avoids any route conflict
 between the marketing page and the documentation section.
+
+## Documentation information architecture
+
+`/docs/` has six sections: Overview, Concepts, Architecture, Guides,
+Reference, and Project (contributing, roadmap status, license). Architecture,
+Guides, and Reference are currently placeholders explicitly marked
+`Planned`; Concepts describes the approved product model and is marked
+`Design`. See **[Contributing to the documentation](src/content/docs/docs/project/contributing.md)**
+for authoring conventions: Markdown vs. MDX, status markers, diagrams and
+images, internal links, draft/public review, and keeping docs in sync with
+`tritolem/workspace` decisions.
 
 ## Design system
 
@@ -86,7 +99,9 @@ option would need to be reintroduced.
 
 ## Continuous integration
 
-- `.github/workflows/ci.yml` runs `npm ci`, `npm run check`, and
-  `npm run build` on every pull request.
+- `.github/workflows/ci.yml` runs `npm ci`, `npm run check`, `npm run build`,
+  and `npm run check:links` on every pull request. The link check crawls the
+  built site and only validates internal links; external links are skipped
+  so CI does not depend on third-party sites being reachable.
 - `.github/workflows/deploy.yml` builds and publishes `./dist/` to GitHub
   Pages on push to `main`.

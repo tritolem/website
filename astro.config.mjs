@@ -22,6 +22,11 @@ export default defineConfig({
       customCss: ['./src/styles/starlight-theme.css'],
       sidebar: [
         { label: 'Overview', link: '/docs/' },
+        { label: 'Concepts', items: [{ autogenerate: { directory: 'docs/concepts' } }] },
+        { label: 'Architecture', items: [{ autogenerate: { directory: 'docs/architecture' } }] },
+        { label: 'Guides', items: [{ autogenerate: { directory: 'docs/guides' } }] },
+        { label: 'Reference', items: [{ autogenerate: { directory: 'docs/reference' } }] },
+        { label: 'Project', items: [{ autogenerate: { directory: 'docs/project' } }] },
       ],
     }),
   ],

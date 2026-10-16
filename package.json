@@ -10,6 +10,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "check:links": "linkinator ./dist --recurse --skip \"^https?://(?!localhost|127\\\\.0\\\\.0\\\\.1)\"",
     "astro": "astro"
   },
   "dependencies": {
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "linkinator": "8.1.0",
     "typescript": "6.0.3"
   }
 }
